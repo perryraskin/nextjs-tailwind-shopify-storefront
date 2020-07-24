@@ -46,7 +46,9 @@ const MenuBar: NextPage<Props> = ({}) => {
           </svg> */}
         </div>
         <div className="text-xl text-white font-bold tracking-tight ml-2">
-          <Link href={`/`}>Next.js Shopify Storefront</Link>
+          <Link href={`/`}>
+            <a>Next.js Shopify Storefront</a>
+          </Link>
         </div>
       </div>
       <div className="flex items-center">
@@ -95,8 +97,9 @@ const MenuBar: NextPage<Props> = ({}) => {
             <div
               ref={node}
               className="absolute top-0 mt-12 right-0 w-64 
-              bg-white py-2 shadow-md border border-gray-100 rounded-lg z-40 text-sm"
+              bg-white py-2 shadow-md border border-gray-100 rounded z-40 text-sm"
             >
+              <p className="block px-4 py-2">Your cart is currently empty.</p>
               {/* <a
                 href="#"
                 className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
@@ -108,14 +111,14 @@ const MenuBar: NextPage<Props> = ({}) => {
                 className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
               >
                 Account Settings
-              </a> */}
+              </a>
               <a
                 href="/"
                 // onClick={handleLogout}
                 className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
               >
-                Your cart is currently empty.
-              </a>
+                Sign out
+              </a> */}
             </div>
           ) : null}
         </div>
