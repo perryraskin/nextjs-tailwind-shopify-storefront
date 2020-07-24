@@ -28,6 +28,29 @@ Install dependencies
 npm install
 ```
 
+Add `graphql.config.json` in root and include GraphQL endpoint and Storefront access token
+
+```json
+{
+  "overwrite": true,
+  "generates": {
+    "models/shopify.model.ts": {
+      "schema": [
+        {
+          "https://[SITE-NAME].myshopify.com/api/graphql": {
+            "headers": {
+              "X-Shopify-Storefront-Access-Token": "[STOREFRONT_ACCESS_TOKEN]"
+            }
+          }
+        }
+      ],
+      "documents": "services/**/*.{ts,tsx}",
+      "plugins": ["typescript", "typescript-operations"]
+    }
+  }
+}
+```
+
 For development
 
 ```
