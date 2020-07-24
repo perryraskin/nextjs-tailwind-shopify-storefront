@@ -1,12 +1,12 @@
-import React from "react";
-import Head from "next/head";
-import App from "next/app";
+import React from "react"
+import Head from "next/head"
+import App from "next/app"
 
-import "../styles/tailwind.css";
+import "../styles/tailwind.css"
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps } = this.props
     return (
       <>
         <Head>
@@ -55,8 +55,8 @@ class MyApp extends App {
         </Head>
         <Component {...pageProps} />
       </>
-    );
+    )
   }
 }
 
-export default MyApp;
+export default MyApp

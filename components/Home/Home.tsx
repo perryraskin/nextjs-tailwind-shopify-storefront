@@ -1,10 +1,11 @@
-import React from "react";
-import { NextPage } from "next";
-import Router from "next/router";
-import withLayout from "../../hocs/withLayout";
-import utilities from "../../utilities";
+import React from "react"
+import { NextPage } from "next"
+import Router from "next/router"
+import withLayout from "../../hocs/withLayout"
+import utilities from "../../utilities"
 
-import Button from "../Elements/Button";
+import Button from "../Elements/Button"
+import BestSellers from "../Products/BestSellers"
 
 interface Props {}
 
@@ -30,8 +31,9 @@ const Home: NextPage<Props> = ({}) => {
           extend="bg-gray-600 hover:bg-gray-500 text-white"
         />
       </a>
+      <BestSellers />
     </div>
-  );
-};
+  )
+}
 
-export default withLayout(Home);
+export default withLayout(Home)

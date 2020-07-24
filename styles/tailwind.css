@@ -154,7 +154,7 @@ h3 {
 
 li > a,
 p > a {
-  @apply link-underline no-select text-black border-purple-700;
+  @apply no-select text-black;
 }
 
 li > a:hover,

@@ -1,35 +1,35 @@
-import * as React from "react";
-import { useContext, useState, useEffect, useRef } from "react";
+import * as React from "react"
+import { useContext, useState, useEffect, useRef } from "react"
 
-import { NextPage } from "next";
-import Link from "next/link";
+import { NextPage } from "next"
+import Link from "next/link"
 
 interface Props {}
 
 const MenuBar: NextPage<Props> = ({}) => {
-  const node = useRef(null);
-  const [open, setOpen] = useState(false);
+  const node = useRef(null)
+  const [open, setOpen] = useState(false)
 
-  const handleClickOutside = (e) => {
+  const handleClickOutside = e => {
     if (node.current.contains(e.target)) {
       // inside click
-      return;
+      return
     }
     // outside click
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   useEffect(() => {
     if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside)
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside)
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [open])
   return (
     <div className="z-40 fixed top-0 w-full px-4 md:px-8 py-2 h-16 flex justify-between items-center shadow bg-gray-900">
       <div className="flex items-center w-2/3">
@@ -74,7 +74,7 @@ const MenuBar: NextPage<Props> = ({}) => {
 
         <div className="relative">
           <div
-            onClick={(e) => setOpen(!open)}
+            onClick={e => setOpen(!open)}
             className="cursor-pointer text-white font-bold w-10 h-10 flex items-center justify-center rounded-full"
           >
             <svg
@@ -121,7 +121,7 @@ const MenuBar: NextPage<Props> = ({}) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MenuBar;
+export default MenuBar

@@ -1,11 +1,12 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import React from "react";
+import { NextPage } from "next"
+import Head from "next/head"
+import React from "react"
 
-import MenuBar from "./MenuBar";
+import MenuBar from "./MenuBar"
+import Footer from "./Footer"
 
 interface Props {
-  children: any;
+  children: any
 }
 
 const Layout: NextPage<Props> = ({ children }) => {
@@ -38,11 +39,12 @@ const Layout: NextPage<Props> = ({ children }) => {
             <br />
             <br />
             {children}
+            <Footer />
           </div>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
