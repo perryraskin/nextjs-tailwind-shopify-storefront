@@ -16,6 +16,13 @@ A real-world Shopping Cart built with TypeScript, NextJS, React, Apollo Client, 
 
 Hit the **Star** button if you love this project ⭐️
 
+## Checklist
+
+* [x] TailwindCSS
+* [ ] Display store products
+* [ ] Product pages
+* [ ] Add to cart functionality
+
 ## Demo
 
 You can visit here to see the demo: [https://next-tailwind-shopify-storefront.herokuapp.com/](https://next-tailwind-shopify-storefront.herokuapp.com/)
