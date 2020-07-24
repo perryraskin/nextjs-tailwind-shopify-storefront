@@ -1,0 +1,18 @@
+{
+  "overwrite": true,
+  "generates": {
+    "models/shopify.model.ts": {
+      "schema": [
+        {
+          "https://test.myshopify.com/api/graphql": {
+            "headers": {
+              "X-Shopify-Storefront-Access-Token": "[STOREFRONT_ACCESS_TOKEN]"
+            }
+          }
+        }
+      ],
+      "documents": "services/**/*.{ts,tsx}",
+      "plugins": ["typescript", "typescript-operations"]
+    }
+  }
+}

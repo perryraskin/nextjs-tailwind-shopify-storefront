@@ -136,7 +136,7 @@
 }
 
 body {
-  @apply text-lg bg-gray-200;
+  @apply text-lg;
   /* font-family: -apple-system, Helvetica; */
 }
 
