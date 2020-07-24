@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 
 import { NextPage } from "next";
 import Link from "next/link";
@@ -7,13 +7,36 @@ import Link from "next/link";
 interface Props {}
 
 const MenuBar: NextPage<Props> = ({}) => {
+  const node = useRef(null);
+  const [open, setOpen] = useState(false);
+
+  const handleClickOutside = (e) => {
+    if (node.current.contains(e.target)) {
+      // inside click
+      return;
+    }
+    // outside click
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
   return (
     <div className="z-40 fixed top-0 w-full px-4 md:px-8 py-2 h-16 flex justify-between items-center shadow bg-gray-900">
       <div className="flex items-center w-2/3">
         {/* <input className="bg-gray-200 focus:outline-none focus:shadow-outline focus:bg-white border border-transparent focus:border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal hidden md:block placeholder-gray-700 mr-10" type="text" placeholder="Search..."></input> */}
 
         <div className="p-2 rounded-full hover:bg-gray-200 cursor-pointer hidden">
-          {/* <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-600"
+          {/* <svg xmlns="http://www.w3.org/2000/svg" className="
             width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"
             fill="none" strokeLinecap="round" strokeLinejoin="round">
             <rect x="0" y="0" width="24" height="24" stroke="none"></rect>
@@ -23,7 +46,7 @@ const MenuBar: NextPage<Props> = ({}) => {
           </svg> */}
         </div>
         <div className="text-xl text-white font-bold tracking-tight ml-2">
-          <a href={`/`}>Next.js Shopify Storefront</a>
+          <Link href={`/`}>Next.js Shopify Storefront</Link>
         </div>
       </div>
       <div className="flex items-center">
@@ -50,7 +73,10 @@ const MenuBar: NextPage<Props> = ({}) => {
         </a>
 
         <div className="relative">
-          <div className="cursor-pointer text-white font-bold w-10 h-10 flex items-center justify-center rounded-full">
+          <div
+            onClick={(e) => setOpen(!open)}
+            className="cursor-pointer text-white font-bold w-10 h-10 flex items-center justify-center rounded-full"
+          >
             <svg
               width="24"
               height="24"
@@ -65,15 +91,33 @@ const MenuBar: NextPage<Props> = ({}) => {
             </svg>
           </div>
 
-          {/* <div className="absolute top-0 mt-12 right-0 w-48 bg-white py-2 shadow-md border border-gray-100 rounded-lg z-40">
-            <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Edit
-              Profile</a>
-            <a href="#"
-              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Account
-              Settings</a>
-            <a href="#" className="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-blue-600">Sign
-              Out</a>
-          </div> */}
+          {open ? (
+            <div
+              ref={node}
+              className="absolute top-0 mt-12 right-0 w-64 
+              bg-white py-2 shadow-md border border-gray-100 rounded-lg z-40 text-sm"
+            >
+              {/* <a
+                href="#"
+                className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
+              >
+                Edit Profile
+              </a>
+              <a
+                href="#"
+                className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
+              >
+                Account Settings
+              </a> */}
+              <a
+                href="/"
+                // onClick={handleLogout}
+                className="block px-4 py-2 hover:bg-gray-100 hover:text-blue-600"
+              >
+                Your cart is currently empty.
+              </a>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

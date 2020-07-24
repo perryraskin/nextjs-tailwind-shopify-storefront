@@ -1,56 +1,37 @@
 import React from "react";
+import { NextPage } from "next";
+import Router from "next/router";
 import withLayout from "../../hocs/withLayout";
 import utilities from "../../utilities";
 
-// const useStyles = makeStyles((them: Theme) => ({
-//   root: {
-//     textAlign: "center",
-//   },
-//   description: {
-//     maxWidth: 500,
-//     margin: "0 auto 20px auto",
-//   },
-//   button: {
-//     margin: "0 10px 15px 10px",
-//   },
-// }));
+import Button from "../Elements/Button";
 
-function Home() {
-  // const theme = useTheme();
-  // const classes = useStyles(theme);
+interface Props {}
 
+const Home: NextPage<Props> = ({}) => {
   return (
-    // <section className={classes.root}>
-    //   <h1>Next.js Shopify Storefront</h1>
-    //   <p className={classes.description}>
-    //     A Shopping Cart built with TypeScript, NextJS, React, Redux, Apollo
-    //     Client, Shopify Storefront GraphQL API, ... and Material UI.
-    //   </p>
-    //   <Button
-    //     variant="contained"
-    //     color="primary"
-    //     className={classes.button}
-    //     onClick={() => utilities.link({ path: "/products" })}
-    //   >
-    //     Browse Products
-    //   </Button>
-    //   <Button
-    //     variant="contained"
-    //     className={classes.button}
-    //     target="_blank"
-    //     href="https://github.com/Maxvien/next-shopify-storefront"
-    //   >
-    //     Get Source Code
-    //   </Button>
-    // </section>
     <div className="text-center">
       <h1>Next.js Shopify Storefront</h1>
       <p>
         A Shopping Cart built with TypeScript, NextJS, React, Apollo Client,
-        Shopify Storefront GraphQL API, and TailwindCSS.
+        Shopify Storefront GraphQL API, and TailwindCSS
       </p>
+      <Button
+        text="Browse Products"
+        extend="bg-blue-600 hover:bg-blue-500 text-white"
+        onClick={() => utilities.link({ path: "/products" })}
+      />
+      <a
+        href="https://github.com/perryraskin/nextjs-tailwind-shopify-storefront"
+        target="_blank"
+      >
+        <Button
+          text="Get Source Code"
+          extend="bg-gray-600 hover:bg-gray-500 text-white"
+        />
+      </a>
     </div>
   );
-}
+};
 
 export default withLayout(Home);
