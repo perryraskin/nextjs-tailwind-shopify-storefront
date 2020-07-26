@@ -19,7 +19,7 @@ Hit the **Star** button if you love this project ⭐️
 ## Checklist
 
 * [x] TailwindCSS
-* [ ] Display store products
+* [x] Display products
 * [ ] Product pages
 * [ ] Add to cart functionality
 
