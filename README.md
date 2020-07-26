@@ -18,10 +18,10 @@ Hit the **Star** button if you love this project ⭐️
 
 ## Checklist
 
-* [x] TailwindCSS
-* [x] Display products
-* [ ] Product pages
-* [ ] Add to cart functionality
+- :white_check_mark: &nbsp; TailwindCSS
+- :white_check_mark: &nbsp; Display products
+- :white_check_mark: &nbsp; Product page
+- :black_square_button: &nbsp; Add to cart functionality
 
 ## Demo
 
