@@ -20,6 +20,7 @@
     "url": "https://github.com/perryraskin/nextjs-tailwind-shopify-storefront/issues"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "@types/detect-node": "^2.0.0",
     "apollo-boost": "^0.4.9",
@@ -35,6 +36,7 @@
     "dotenv-webpack": "^2.0.0",
     "express": "^4.17.1",
     "graphql": "^14.7.0",
+    "graphql-tag": "^2.10.4",
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.19",
