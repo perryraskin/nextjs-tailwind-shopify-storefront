@@ -1,14 +1,32 @@
 import React from "react"
 import Head from "next/head"
 import App from "next/app"
+import { ApolloClient } from "apollo-client"
+import { createHttpLink } from "apollo-link-http"
+import { setContext } from "apollo-link-context"
+import { InMemoryCache } from "apollo-cache-inmemory"
+import { ApolloProvider } from "react-apollo"
 
 import "../styles/tailwind.css"
+
+const httpLink = createHttpLink({ uri: process.env.REACT_APP_STORE_URI })
+
+const middlewareLink = setContext(() => ({
+  headers: {
+    "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_STOREFRONT_TOKEN
+  }
+}))
+
+export const client = new ApolloClient({
+  link: middlewareLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
 
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
     return (
-      <>
+      <ApolloProvider client={client}>
         <Head>
           <meta
             name="viewport"
@@ -54,7 +72,7 @@ class MyApp extends App {
           <meta key="twitter:card" property="twitter:card" content="summary" />
         </Head>
         <Component {...pageProps} />
-      </>
+      </ApolloProvider>
     )
   }
 }
