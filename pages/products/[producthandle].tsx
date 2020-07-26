@@ -181,7 +181,7 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
                     <span className="mr-3">Size</span>
                     <div className="relative">
                       <select className="rounded border appearance-none border-gray-400 py-2 focus:outline-none focus:border-blue-500 text-base pl-3 pr-10">
-                        <option>SM</option>
+                        <option>S</option>
                         <option>M</option>
                         <option>L</option>
                         <option>XL</option>
@@ -214,7 +214,7 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
                 </label>
                 <div className="flex">
                   <span className="title-font font-medium text-2xl text-gray-900">
-                    ${price}
+                    ${parseFloat(price).toFixed(2)}
                   </span>
                   <button className="flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
                     Add to cart
