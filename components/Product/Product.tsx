@@ -46,7 +46,7 @@ const Product: NextPage<Props> = ({ product }) => {
         <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
           CATEGORY
         </h3>
-        <h2 className="text-gray-900 title-font text-lg font-medium">
+        <h2 className="text-gray-900 border-0 mb-1 title-font text-lg font-medium">
           {product.title}
         </h2>
         <p className="mt-1">${variant.price}</p>

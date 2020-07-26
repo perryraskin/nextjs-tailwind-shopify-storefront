@@ -27,7 +27,7 @@ interface Props {
   product: any
 }
 
-const ProductsPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
+const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
   const [variantQuantity, setVariantQuantity] = useState(1)
 
   const handleQuantityChange = event => {
@@ -205,7 +205,7 @@ const ProductsPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
                 <label className="Product__option">
                   Qty:{" "}
                   <input
-                    className="mb-2 border-2 rounded w-10 text-center"
+                    className="mb-4 border-2 rounded w-10 text-center"
                     min="1"
                     type="number"
                     defaultValue={variantQuantity}
@@ -244,7 +244,6 @@ const ProductsPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
 export async function getStaticProps({ ...ctx }) {
   const { producthandle } = ctx.params
   const product = await get({ handle: producthandle })
-  console.log(product.productByHandle)
 
   return {
     props: {
@@ -264,4 +263,4 @@ export async function getStaticPaths() {
   }
 }
 
-export default ProductsPage
+export default ProductPage
