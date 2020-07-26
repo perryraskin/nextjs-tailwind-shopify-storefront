@@ -20,8 +20,10 @@ Hit the **Star** button if you love this project ⭐️
 
 - :white_check_mark: &nbsp; TailwindCSS
 - :white_check_mark: &nbsp; Display products
-- :white_check_mark: &nbsp; Product page
+- :white_check_mark: &nbsp; Product pages
 - :black_square_button: &nbsp; Add to cart functionality
+- :black_square_button: &nbsp; Pagination
+- :black_square_button: &nbsp; Deploy to Heroku
 
 ## Demo
 
