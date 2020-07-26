@@ -25,6 +25,15 @@ Hit the **Star** button if you love this project ⭐️
 - :black_square_button: &nbsp; Pagination
 - :black_square_button: &nbsp; Deploy to Heroku
 
+## Checklist
+
+:white_check_mark: &nbsp; TailwindCSS
+<br/>:white_check_mark: &nbsp; Display products
+<br/>:white_check_mark: &nbsp; Product pages
+<br/>:black_square_button: &nbsp; Add to cart functionality
+<br/>:black_square_button: &nbsp; Pagination
+<br/>:black_square_button: &nbsp; Deploy to Heroku
+
 ## Demo
 
 You can visit here to see the demo: [https://next-tailwind-shopify-storefront.herokuapp.com/](https://next-tailwind-shopify-storefront.herokuapp.com/)
