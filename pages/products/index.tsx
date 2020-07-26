@@ -13,11 +13,10 @@ import {
   checkoutLineItemsUpdate,
   checkoutLineItemsRemove,
   checkoutCustomerAssociate
-} from "../services/checkout"
+} from "../../services/checkout"
 
-import client from "./_app"
-import Products from "../components/Products/Products"
-import Layout from "../components/Layout/Layout"
+import Products from "../../components/Products/Products"
+import Layout from "../../components/Layout/Layout"
 
 interface Props {}
 
@@ -35,6 +34,7 @@ const query = gql`
           node {
             id
             title
+            handle
             options {
               id
               name

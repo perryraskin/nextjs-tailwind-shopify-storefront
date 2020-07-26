@@ -1,5 +1,6 @@
 import { NextPage } from "next"
 import React, { useState } from "react"
+import Link from "next/link"
 
 interface Props {
   product: any
@@ -30,15 +31,17 @@ const Product: NextPage<Props> = ({ product }) => {
   }
   return (
     <div className="lg:w-1/4 md:w-1/2 p-4 w-full">
-      <a className="block relative h-48 rounded overflow-hidden">
-        {product.images.edges.length ? (
-          <img
-            className="object-cover object-center w-full h-full block"
-            src={variantImage.src}
-            alt={`${product.title} product shot`}
-          />
-        ) : null}
-      </a>
+      <Link href={`/products/${product.handle}`}>
+        <a className="block relative h-48 rounded overflow-hidden">
+          {product.images.edges.length ? (
+            <img
+              className="object-cover object-center w-full h-full block"
+              src={variantImage.src}
+              alt={`${product.title} product shot`}
+            />
+          ) : null}
+        </a>
+      </Link>
       <div className="mt-4">
         <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
           CATEGORY
