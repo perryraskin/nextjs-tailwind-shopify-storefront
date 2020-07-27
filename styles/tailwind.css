@@ -141,11 +141,11 @@ body {
 }
 
 h1 {
-  @apply inline-block pb-2 mt-6 mb-4 text-3xl font-semibold leading-tight border-b;
+  @apply inline-block pb-2 mt-6 mb-4 text-3xl font-semibold leading-tight;
 }
 
 h2 {
-  @apply pb-2 mb-8 text-2xl leading-tight border-b font-semibold;
+  @apply pb-2 mb-4 text-2xl leading-tight font-semibold;
 }
 
 h3 {

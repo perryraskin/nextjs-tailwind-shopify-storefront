@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useRef, useContext } from "react"
 import { NextPage } from "next"
+import Head from "next/head"
 import { useQuery, useMutation } from "@apollo/react-hooks"
-// import Product from './components/Product';
-// import Cart from './components/Cart';
-// import CustomerAuthWithMutation from './components/CustomerAuth';
 import gql from "graphql-tag"
+import Cookies from "js-cookie"
 import {
   useCheckoutEffect,
   createCheckout,
@@ -14,80 +13,55 @@ import {
   checkoutCustomerAssociate
 } from "../../services/checkout"
 
-import Products from "../../components/Products/Products"
-import Layout from "../../components/Layout/Layout"
+import CartContext from "./CartContext"
+import LineItem from "./LineItem"
 
 interface Props {}
 
-const query = gql`
-  query query {
-    shop {
-      name
-      description
-      products(first: 20) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-        }
-        edges {
-          node {
-            id
-            title
-            handle
-            options {
-              id
-              name
-              values
-            }
-            variants(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  id
-                  title
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  image {
-                    src
-                  }
-                  price
-                }
-              }
-            }
-            images(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  src
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
-const ProductsPage: NextPage<Props> = ({}) => {
-  const [isCartOpen, setCartOpen] = useState(false)
+const Cart: NextPage<Props> = ({}) => {
+  const { isCartOpen, setIsCartOpen } = useContext(CartContext)
+  const node = useRef(null)
+  const [checkout, setCheckout] = useState({
+    id: "",
+    lineItems: { edges: [] },
+    webUrl: "",
+    subtotalPrice: 0,
+    totalTax: 0,
+    totalPrice: 0
+  })
+  const [customerAccessToken, setCustomerAccessToken] = useState(null)
   const [isNewCustomer, setNewCustomer] = useState(false)
   const [isCustomerAuthOpen, setCustomerAuthOpen] = useState(false)
   const [
     showAccountVerificationMessage,
     setAccountVerificationMessage
   ] = useState(false)
-  const [checkout, setCheckout] = useState({ lineItems: { edges: [] } })
+  const checkoutId = Cookies.get("checkoutId")
 
-  const [customerAccessToken, setCustomerAccessToken] = useState(null)
+  const handleClickOutside = e => {
+    if (node.current.contains(e.target)) {
+      // inside click
+      return
+    }
+    // outside click
+    setIsCartOpen(false)
+  }
+
+  useEffect(() => {
+    if (isCartOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isCartOpen])
+
+  const openCheckout = () => {
+    window.open(checkout.webUrl)
+  }
 
   const [
     createCheckoutMutation,
@@ -97,15 +71,6 @@ const ProductsPage: NextPage<Props> = ({}) => {
       error: createCheckoutError
     }
   ] = useMutation(createCheckout)
-
-  const [
-    lineItemAddMutation,
-    {
-      data: lineItemAddData,
-      loading: lineItemAddLoading,
-      error: lineItemAddError
-    }
-  ] = useMutation(checkoutLineItemsAdd)
 
   const [
     lineItemUpdateMutation,
@@ -134,15 +99,13 @@ const ProductsPage: NextPage<Props> = ({}) => {
     }
   ] = useMutation(checkoutCustomerAssociate)
 
-  const { loading: shopLoading, error: shopError, data: shopData } = useQuery(
-    query
-  )
-
   useEffect(() => {
     const variables = { input: {} }
     createCheckoutMutation({ variables }).then(
       res => {
-        console.log(res)
+        console.log("checkout:", res)
+        const checkout = res.data.checkoutCreate.checkout
+        if (!checkoutId) Cookies.set("checkoutId", checkout.id)
       },
       err => {
         console.log("create checkout error", err)
@@ -151,7 +114,7 @@ const ProductsPage: NextPage<Props> = ({}) => {
   }, [])
 
   useCheckoutEffect(createCheckoutData, "checkoutCreate", setCheckout)
-  useCheckoutEffect(lineItemAddData, "checkoutLineItemsAdd", setCheckout)
+
   useCheckoutEffect(lineItemUpdateData, "checkoutLineItemsUpdate", setCheckout)
   useCheckoutEffect(lineItemRemoveData, "checkoutLineItemsRemove", setCheckout)
   useCheckoutEffect(
@@ -161,7 +124,7 @@ const ProductsPage: NextPage<Props> = ({}) => {
   )
 
   const handleCartClose = () => {
-    setCartOpen(false)
+    setIsCartOpen(false)
   }
 
   const openCustomerAuth = event => {
@@ -183,19 +146,6 @@ const ProductsPage: NextPage<Props> = ({}) => {
 
   const closeCustomerAuth = () => {
     setCustomerAuthOpen(false)
-  }
-
-  const addVariantToCart = (variantId, quantity) => {
-    const variables = {
-      checkoutId: checkout.id,
-      lineItems: [{ variantId, quantity: parseInt(quantity, 10) }]
-    }
-    // TODO replace for each mutation in the checkout thingy. can we export them from there???
-    // create your own custom hook???
-
-    lineItemAddMutation({ variables }).then(res => {
-      setCartOpen(true)
-    })
   }
 
   const updateLineItemInCart = (lineItemId, quantity) => {
@@ -221,19 +171,54 @@ const ProductsPage: NextPage<Props> = ({}) => {
     })
   }
 
-  if (shopLoading) {
-    return <p>Loading ...</p>
-  }
-
-  if (shopError) {
-    return <p>{shopError.message}</p>
-  }
+  let line_items = checkout.lineItems.edges.map(line_item => {
+    return (
+      <LineItem
+        removeLineItemInCart={removeLineItemInCart}
+        updateLineItemInCart={updateLineItemInCart}
+        key={line_item.node.id.toString()}
+        line_item={line_item.node}
+      />
+    )
+  })
 
   return (
-    <Layout>
-      <Products products={shopData.shop.products} checkout={checkout} />
-    </Layout>
+    <div ref={node} className={`z-40 Cart ${isCartOpen ? "Cart--open" : ""}`}>
+      <header className="Cart__header">
+        <h2 className="mb-0">Shopping Cart</h2>
+        <button onClick={handleCartClose} className="Cart__close">
+          ×
+        </button>
+      </header>
+      <ul className="Cart__line-items">{line_items}</ul>
+      <footer className="Cart__footer">
+        <div className="Cart-info clearfix">
+          <div className="Cart-info__total Cart-info__small">Subtotal</div>
+          <div className="Cart-info__pricing">
+            <span className="pricing">${checkout.subtotalPrice}</span>
+          </div>
+        </div>
+        <div className="Cart-info clearfix">
+          <div className="Cart-info__total Cart-info__small">Taxes</div>
+          <div className="Cart-info__pricing">
+            <span className="pricing">${checkout.totalTax}</span>
+          </div>
+        </div>
+        <div className="Cart-info clearfix">
+          <div className="Cart-info__total Cart-info__small">Total</div>
+          <div className="Cart-info__pricing">
+            <span className="pricing">${checkout.totalPrice}</span>
+          </div>
+        </div>
+        <button
+          className="Cart__checkout bg-blue-600 text-white my-4 py-2"
+          onClick={openCheckout}
+        >
+          Checkout
+        </button>
+      </footer>
+    </div>
   )
 }
 
-export default ProductsPage
+export default Cart
