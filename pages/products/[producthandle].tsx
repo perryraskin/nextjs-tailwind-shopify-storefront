@@ -54,7 +54,7 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
 
   const addVariantToCart = (variantId, quantity) => {
     const variables = {
-      checkoutId: checkout.id,
+      checkoutId: checkoutId,
       lineItems: [{ variantId, quantity: parseInt(quantity, 10) }]
     }
     // TODO replace for each mutation in the checkout thingy. can we export them from there???

@@ -7,6 +7,7 @@ import Cookies from "js-cookie"
 import {
   useCheckoutEffect,
   createCheckout,
+  checkoutQuery,
   checkoutLineItemsAdd,
   checkoutLineItemsUpdate,
   checkoutLineItemsRemove,
@@ -41,10 +42,11 @@ const Cart: NextPage<Props> = ({}) => {
   const handleClickOutside = e => {
     if (node.current.contains(e.target)) {
       // inside click
-      return
+      setIsCartOpen(true)
+    } else {
+      // outside click
+      setIsCartOpen(false)
     }
-    // outside click
-    setIsCartOpen(false)
   }
 
   useEffect(() => {
@@ -99,22 +101,50 @@ const Cart: NextPage<Props> = ({}) => {
     }
   ] = useMutation(checkoutCustomerAssociate)
 
-  useEffect(() => {
-    const variables = { input: {} }
-    createCheckoutMutation({ variables }).then(
-      res => {
-        console.log("checkout:", res)
-        const checkout = res.data.checkoutCreate.checkout
-        if (!checkoutId) Cookies.set("checkoutId", checkout.id)
-      },
-      err => {
-        console.log("create checkout error", err)
+  const {
+    loading: checkoutLoading,
+    error: checkoutError,
+    data: checkoutData
+  } = useQuery(checkoutQuery, {
+    variables: { checkoutId }
+  })
+
+  if (checkoutId) {
+    let waitForCheckout = setTimeout(() => {
+      if (checkout.id === "") {
+        console.log("loading checkout...")
+        if (checkoutData || checkoutError) {
+          setCheckout(checkoutData.node)
+          console.log("current checkout:", checkoutData.node)
+          console.log("error checkout:", checkoutError)
+          clearTimeout(waitForCheckout)
+        }
       }
-    )
+    }, 1000)
+  }
+
+  useEffect(() => {
+    if (!checkoutId) {
+      const variables = { input: {} }
+      createCheckoutMutation({ variables }).then(
+        res => {
+          console.log("new checkout:", res)
+          const checkout = res.data.checkoutCreate.checkout
+          if (checkout) {
+            Cookies.set("checkoutId", checkout.id, {
+              maxAge: 1000 * 60 * 60 * 24 * 7
+            }) // 7 days
+          }
+        },
+        err => {
+          console.log("create checkout error", err)
+        }
+      )
+    }
   }, [])
 
   useCheckoutEffect(createCheckoutData, "checkoutCreate", setCheckout)
-
+  // useCheckoutEffect(getCheckoutData, "checkoutGet", setCheckout)
   useCheckoutEffect(lineItemUpdateData, "checkoutLineItemsUpdate", setCheckout)
   useCheckoutEffect(lineItemRemoveData, "checkoutLineItemsRemove", setCheckout)
   useCheckoutEffect(
@@ -149,6 +179,7 @@ const Cart: NextPage<Props> = ({}) => {
   }
 
   const updateLineItemInCart = (lineItemId, quantity) => {
+    setIsCartOpen(true)
     const variables = {
       checkoutId: checkout.id,
       lineItems: [{ id: lineItemId, quantity: parseInt(quantity, 10) }]
@@ -157,6 +188,7 @@ const Cart: NextPage<Props> = ({}) => {
   }
 
   const removeLineItemInCart = lineItemId => {
+    setIsCartOpen(true)
     const variables = { checkoutId: checkout.id, lineItemIds: [lineItemId] }
     lineItemRemoveMutation({ variables })
   }
