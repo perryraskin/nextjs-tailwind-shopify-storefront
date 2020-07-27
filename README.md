@@ -27,7 +27,7 @@ Hit the **Star** button if you love this project ⭐️
 
 ## Demo
 
-You can visit here to see the demo: [https://next-tailwind-shopify-storefront.herokuapp.com/](https://next-tailwind-shopify-storefront.herokuapp.com/)
+You can visit here to see the demo: [https://nextjs-shopify-storefront.herokuapp.com/](https://nextjs-shopify-storefront.herokuapp.com/)
 
 ## Usage
 
