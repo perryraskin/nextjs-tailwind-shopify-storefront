@@ -76,6 +76,16 @@ const MenuBar: NextPage<Props> = ({}) => {
             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
           </svg>
         </a>
+        <div className="text-white text-sm uppercase tracking-wider font-semibold ml-2 mr-2">
+          <Link href={`/`}>
+            <a>Home</a>
+          </Link>
+        </div>
+        <div className="text-white text-sm uppercase tracking-wider font-semibold ml-2 mr-6">
+          <Link href={`/products`}>
+            <a>Products</a>
+          </Link>
+        </div>
 
         <div className="relative">
           <div
