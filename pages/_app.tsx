@@ -30,12 +30,26 @@ export const client = new ApolloClient({
 
 class MyApp extends App {
   state = {
-    isCartOpen: false
+    isCartOpen: false,
+    checkout: {
+      id: "",
+      lineItems: { edges: [] },
+      webUrl: "",
+      subtotalPrice: 0,
+      totalTax: 0,
+      totalPrice: 0
+    }
   }
 
   setIsCartOpen = (isOpen: boolean) => {
     this.setState({
       isCartOpen: isOpen
+    })
+  }
+
+  setCheckout = (currentCheckout: any) => {
+    this.setState({
+      checkout: currentCheckout
     })
   }
 
@@ -46,7 +60,9 @@ class MyApp extends App {
         <CartContext.Provider
           value={{
             isCartOpen: this.state.isCartOpen,
-            setIsCartOpen: this.setIsCartOpen
+            setIsCartOpen: this.setIsCartOpen,
+            checkout: this.state.checkout,
+            setCheckout: this.setCheckout
           }}
         >
           <Head>

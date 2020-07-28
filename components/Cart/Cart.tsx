@@ -20,16 +20,10 @@ import LineItem from "./LineItem"
 interface Props {}
 
 const Cart: NextPage<Props> = ({}) => {
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext)
+  const { isCartOpen, setIsCartOpen, checkout, setCheckout } = useContext(
+    CartContext
+  )
   const node = useRef(null)
-  const [checkout, setCheckout] = useState({
-    id: "",
-    lineItems: { edges: [] },
-    webUrl: "",
-    subtotalPrice: 0,
-    totalTax: 0,
-    totalPrice: 0
-  })
   const [customerAccessToken, setCustomerAccessToken] = useState(null)
   const [isNewCustomer, setNewCustomer] = useState(false)
   const [isCustomerAuthOpen, setCustomerAuthOpen] = useState(false)

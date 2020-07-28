@@ -6,10 +6,12 @@ import Cookies from "js-cookie"
 import {
   useCheckoutEffect,
   createCheckout,
+  checkoutQuery,
   checkoutLineItemsAdd,
   checkoutLineItemsUpdate,
   checkoutLineItemsRemove,
-  checkoutCustomerAssociate
+  checkoutCustomerAssociate,
+  getCheckout
 } from "../../services/checkout"
 
 import Layout from "../../components/Layout/Layout"
@@ -25,15 +27,9 @@ interface Props {
 }
 
 const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext)
-  const [checkout, setCheckout] = useState({
-    id: "",
-    lineItems: { edges: [] },
-    webUrl: "",
-    subtotalPrice: 0,
-    totalTax: 0,
-    totalPrice: 0
-  })
+  const { isCartOpen, setIsCartOpen, checkout, setCheckout } = useContext(
+    CartContext
+  )
   const [variantQuantity, setVariantQuantity] = useState(1)
   const checkoutId = Cookies.get("checkoutId")
 
@@ -52,7 +48,7 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
 
   useCheckoutEffect(lineItemAddData, "checkoutLineItemsAdd", setCheckout)
 
-  const addVariantToCart = (variantId, quantity) => {
+  const addVariantToCart = async (variantId, quantity) => {
     const variables = {
       checkoutId: checkoutId,
       lineItems: [{ variantId, quantity: parseInt(quantity, 10) }]
