@@ -110,7 +110,7 @@ const Cart: NextPage<Props> = ({}) => {
         if (checkoutData || checkoutError) {
           setCheckout(checkoutData.node)
           console.log("current checkout:", checkoutData.node)
-          console.log("error checkout:", checkoutError)
+          console.log("error checkout:", checkoutError || "None")
           clearTimeout(waitForCheckout)
         }
       }

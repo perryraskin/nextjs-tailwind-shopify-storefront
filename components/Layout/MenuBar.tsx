@@ -11,27 +11,28 @@ interface Props {}
 const MenuBar: NextPage<Props> = ({}) => {
   const { isCartOpen, setIsCartOpen } = useContext(CartContext)
   const node = useRef(null)
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false)
 
-  const handleClickOutside = e => {
-    if (node.current.contains(e.target)) {
-      // inside click
-      return
-    }
-    // outside click
-    setIsCartOpen(false)
-  }
+  // const handleClickOutside = e => {
+  //   if (node.current.contains(e.target)) {
+  //     // inside click
+  //     return
+  //   }
+  //   // outside click
+  //   setIsDropDownOpen(false)
+  // }
 
-  useEffect(() => {
-    if (isCartOpen) {
-      document.addEventListener("mousedown", handleClickOutside)
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
+  // useEffect(() => {
+  //   if (isDropDownOpen) {
+  //     document.addEventListener("mousedown", handleClickOutside)
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClickOutside)
+  //   }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isCartOpen])
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside)
+  //   }
+  // }, [isDropDownOpen])
   return (
     <div className="z-40 fixed top-0 w-full px-4 md:px-8 py-2 h-16 flex justify-between items-center shadow bg-gray-900">
       <div className="flex items-center w-2/3">
@@ -95,9 +96,9 @@ const MenuBar: NextPage<Props> = ({}) => {
             </svg>
           </div>
 
-          {isCartOpen ? (
+          {isDropDownOpen ? (
             <div
-              ref={node}
+              // ref={node}
               className="absolute top-0 mt-12 right-0 w-64 
               bg-white py-2 shadow-md border border-gray-100 rounded z-40 text-sm"
             >
