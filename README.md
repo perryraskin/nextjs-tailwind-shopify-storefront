@@ -23,7 +23,7 @@ Hit the **Star** button if you love this project ⭐️
 <br/>:white_check_mark: &nbsp; Product pages
 <br/>:white_check_mark: &nbsp; Add to cart functionality
 <br/>:black_square_button: &nbsp; Pagination
-<br/>:black_square_button: &nbsp; Deploy to Heroku
+<br/>:white_check_mark: &nbsp; Deploy to Heroku
 
 ## Demo
 
