@@ -21,7 +21,7 @@ Hit the **Star** button if you love this project ⭐️
 :white_check_mark: &nbsp; TailwindCSS
 <br/>:white_check_mark: &nbsp; Display products
 <br/>:white_check_mark: &nbsp; Product pages
-<br/>:black_square_button: &nbsp; Add to cart functionality
+<br/>:white_check_mark: &nbsp; Add to cart functionality
 <br/>:black_square_button: &nbsp; Pagination
 <br/>:black_square_button: &nbsp; Deploy to Heroku
 
