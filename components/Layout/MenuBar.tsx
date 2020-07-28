@@ -4,11 +4,13 @@ import { useContext, useState, useEffect, useRef } from "react"
 import { NextPage } from "next"
 import Link from "next/link"
 
+import CartContext from "../Cart/CartContext"
+
 interface Props {}
 
 const MenuBar: NextPage<Props> = ({}) => {
+  const { isCartOpen, setIsCartOpen } = useContext(CartContext)
   const node = useRef(null)
-  const [open, setOpen] = useState(false)
 
   const handleClickOutside = e => {
     if (node.current.contains(e.target)) {
@@ -16,11 +18,11 @@ const MenuBar: NextPage<Props> = ({}) => {
       return
     }
     // outside click
-    setOpen(false)
+    setIsCartOpen(false)
   }
 
   useEffect(() => {
-    if (open) {
+    if (isCartOpen) {
       document.addEventListener("mousedown", handleClickOutside)
     } else {
       document.removeEventListener("mousedown", handleClickOutside)
@@ -29,7 +31,7 @@ const MenuBar: NextPage<Props> = ({}) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
-  }, [open])
+  }, [isCartOpen])
   return (
     <div className="z-40 fixed top-0 w-full px-4 md:px-8 py-2 h-16 flex justify-between items-center shadow bg-gray-900">
       <div className="flex items-center w-2/3">
@@ -76,7 +78,7 @@ const MenuBar: NextPage<Props> = ({}) => {
 
         <div className="relative">
           <div
-            onClick={e => setOpen(!open)}
+            onClick={e => setIsCartOpen(!isCartOpen)}
             className="cursor-pointer text-white font-bold w-10 h-10 flex items-center justify-center rounded-full"
           >
             <svg
@@ -93,7 +95,7 @@ const MenuBar: NextPage<Props> = ({}) => {
             </svg>
           </div>
 
-          {open ? (
+          {isCartOpen ? (
             <div
               ref={node}
               className="absolute top-0 mt-12 right-0 w-64 

@@ -7,10 +7,9 @@ import Product from "../Product/Product"
 
 interface Props {
   products: any
-  checkout: any
 }
 
-const Products: NextPage<Props> = ({ products, checkout }) => {
+const Products: NextPage<Props> = ({ products }) => {
   return (
     <section className="body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -18,7 +17,6 @@ const Products: NextPage<Props> = ({ products, checkout }) => {
           {products.edges.map(product => (
             <Product
               // addVariantToCart={addVariantToCart}
-              checkout={checkout}
               key={product.node.id.toString()}
               product={product.node}
             />

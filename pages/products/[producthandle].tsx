@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { NextPage } from "next"
 import Head from "next/head"
 import { useQuery, useMutation } from "@apollo/react-hooks"
-import { ApolloProvider } from "react-apollo"
-// import Product from './components/Product';
-// import Cart from './components/Cart';
-// import CustomerAuthWithMutation from './components/CustomerAuth';
-import gql from "graphql-tag"
+import Cookies from "js-cookie"
 import {
   useCheckoutEffect,
   createCheckout,
+  checkoutQuery,
   checkoutLineItemsAdd,
   checkoutLineItemsUpdate,
   checkoutLineItemsRemove,
-  checkoutCustomerAssociate
+  checkoutCustomerAssociate,
+  getCheckout
 } from "../../services/checkout"
 
 import Layout from "../../components/Layout/Layout"
+import CartContext from "../../components/Cart/CartContext"
 
 import { get } from "../../services/product"
 import { getProductsInfo } from "../../services/products"
@@ -28,10 +27,38 @@ interface Props {
 }
 
 const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
+  const { isCartOpen, setIsCartOpen, checkout, setCheckout } = useContext(
+    CartContext
+  )
   const [variantQuantity, setVariantQuantity] = useState(1)
+  const checkoutId = Cookies.get("checkoutId")
 
   const handleQuantityChange = event => {
     setVariantQuantity(event.target.value)
+  }
+
+  const [
+    lineItemAddMutation,
+    {
+      data: lineItemAddData,
+      loading: lineItemAddLoading,
+      error: lineItemAddError
+    }
+  ] = useMutation(checkoutLineItemsAdd)
+
+  useCheckoutEffect(lineItemAddData, "checkoutLineItemsAdd", setCheckout)
+
+  const addVariantToCart = async (variantId, quantity) => {
+    const variables = {
+      checkoutId: checkoutId,
+      lineItems: [{ variantId, quantity: parseInt(quantity, 10) }]
+    }
+    // TODO replace for each mutation in the checkout thingy. can we export them from there???
+    // create your own custom hook???
+
+    lineItemAddMutation({ variables }).then(res => {
+      setIsCartOpen(true)
+    })
   }
 
   if (shopLoading) {
@@ -43,6 +70,7 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
   }
 
   const variants = product.variants.edges.map(({ node }) => ({ ...node }))
+  const variant = product.variants.edges[0].node
   const images = product.images.edges
   const imageSrc = images.length
     ? images[0].node.transformedSrc
@@ -216,7 +244,12 @@ const ProductPage: NextPage<Props> = ({ shopLoading, shopError, product }) => {
                   <span className="title-font font-medium text-2xl text-gray-900">
                     ${parseFloat(price).toFixed(2)}
                   </span>
-                  <button className="flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
+                  <button
+                    className="flex ml-auto text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded"
+                    onClick={() =>
+                      addVariantToCart(variant.id, variantQuantity)
+                    }
+                  >
                     Add to cart
                   </button>
                   <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

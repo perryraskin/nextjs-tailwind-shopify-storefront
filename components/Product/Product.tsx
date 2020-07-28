@@ -4,7 +4,6 @@ import Link from "next/link"
 
 interface Props {
   product: any
-  checkout: any
 }
 
 const Product: NextPage<Props> = ({ product }) => {

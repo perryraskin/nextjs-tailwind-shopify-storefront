@@ -1,5 +1,10 @@
 import gql from "graphql-tag"
 import { useEffect } from "react"
+import {
+  CheckoutQueryVariables,
+  CheckoutLineItemsReplaceMutationVariables
+} from "../models"
+import client from "./client"
 
 const CheckoutFragment = gql`
   fragment CheckoutFragment on Checkout {
@@ -41,6 +46,17 @@ export const createCheckout = gql`
     }
   }
   ${CheckoutFragment}
+`
+
+export const checkoutQuery = gql`
+  ${CheckoutFragment}
+  query checkout($checkoutId: ID!) {
+    node(id: $checkoutId) {
+      ... on Checkout {
+        ...CheckoutFragment
+      }
+    }
+  }
 `
 
 export const checkoutLineItemsAdd = gql`
@@ -124,4 +140,17 @@ export function useCheckoutEffect(data, key, setDataCallback) {
       setDataCallback(data[key].checkout)
     }
   }, [data])
+}
+
+export async function getCheckout(checkoutId) {
+  const variables: CheckoutQueryVariables = {
+    checkoutId
+  }
+
+  const { data } = await client.query({
+    query: checkoutQuery,
+    variables
+  })
+
+  return data
 }
