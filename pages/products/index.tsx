@@ -16,6 +16,7 @@ import {
 
 import Products from "../../components/Products/Products"
 import Layout from "../../components/Layout/Layout"
+import CartContext from "../../components/Cart/CartContext"
 
 interface Props {}
 
@@ -78,14 +79,15 @@ const query = gql`
 `
 
 const ProductsPage: NextPage<Props> = ({}) => {
-  const [isCartOpen, setCartOpen] = useState(false)
+  const { isCartOpen, setIsCartOpen, checkout, setCheckout } = useContext(
+    CartContext
+  )
   const [isNewCustomer, setNewCustomer] = useState(false)
   const [isCustomerAuthOpen, setCustomerAuthOpen] = useState(false)
   const [
     showAccountVerificationMessage,
     setAccountVerificationMessage
   ] = useState(false)
-  const [checkout, setCheckout] = useState({ lineItems: { edges: [] } })
 
   const [customerAccessToken, setCustomerAccessToken] = useState(null)
 
@@ -161,7 +163,7 @@ const ProductsPage: NextPage<Props> = ({}) => {
   )
 
   const handleCartClose = () => {
-    setCartOpen(false)
+    setIsCartOpen(false)
   }
 
   const openCustomerAuth = event => {
@@ -194,7 +196,7 @@ const ProductsPage: NextPage<Props> = ({}) => {
     // create your own custom hook???
 
     lineItemAddMutation({ variables }).then(res => {
-      setCartOpen(true)
+      setIsCartOpen(true)
     })
   }
 
@@ -231,7 +233,7 @@ const ProductsPage: NextPage<Props> = ({}) => {
 
   return (
     <Layout>
-      <Products products={shopData.shop.products} checkout={checkout} />
+      <Products products={shopData.shop.products} />
     </Layout>
   )
 }

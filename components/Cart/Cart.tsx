@@ -126,7 +126,7 @@ const Cart: NextPage<Props> = ({}) => {
           const checkout = res.data.checkoutCreate.checkout
           if (checkout) {
             Cookies.set("checkoutId", checkout.id, {
-              maxAge: 1000 * 60 * 60 * 24 * 7
+              expires: 7
             }) // 7 days
           }
         },
