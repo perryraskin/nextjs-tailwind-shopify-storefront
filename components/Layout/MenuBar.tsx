@@ -50,7 +50,7 @@ const MenuBar: NextPage<Props> = ({}) => {
         </div>
         <div className="text-xl text-white font-bold tracking-tight ml-2">
           <Link href={`/`}>
-            <a>Next.js Shopify Storefront</a>
+            <a>The Store</a>
           </Link>
         </div>
       </div>
