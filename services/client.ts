@@ -6,11 +6,13 @@ import {
   createHttpLink
 } from "@apollo/client"
 
-const httpLink = createHttpLink({ uri: process.env.REACT_APP_STORE_URI })
+const httpLink = createHttpLink({
+  uri: "https://empire-covers.myshopify.com/api/graphql"
+})
 
 const middlewareLink = setContext(() => ({
   headers: {
-    "X-Shopify-Storefront-Access-Token": process.env.REACT_APP_STOREFRONT_TOKEN
+    "X-Shopify-Storefront-Access-Token": "d87927b8f71650768af77036bee6ca03"
   }
 }))
 
