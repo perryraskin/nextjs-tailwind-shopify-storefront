@@ -28,7 +28,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
-    "autoprefixer": "^9.8.5",
+    "autoprefixer": "^10.2.3",
     "cookie-parser": "^1.4.5",
     "dayjs": "^1.8.30",
     "detect-node": "^2.0.4",
@@ -40,14 +40,14 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.19",
-    "next": "^9.4.4",
+    "next": "^10.0.5",
+    "postcss": "^8.2.4",
     "prettier": "^1.19.1",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
-    "tailwindcss": "^1.5.2",
-    "tailwindcss-spinner": "^1.2.0"
+    "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.0",

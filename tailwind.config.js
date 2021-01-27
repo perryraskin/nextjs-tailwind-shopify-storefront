@@ -4,34 +4,27 @@ module.exports = {
     "./pages/**/*.jsx",
     "./components/**/*.tsx",
     "./components/**/*.jsx",
-    "./public/index.html",
-    "./styles/tailwind.css",
+    "./public/index.html"
   ],
+  darkMode: false, // or 'media' or 'class'
   theme: {
-    spinner: (theme) => ({
-      default: {
-        color: "#ffffff", // color you want to make the spinner
-        size: "1em", // size of the spinner (used for both width and height)
-        border: "2px", // border-width of the spinner (shouldn't be bigger than half the spinner's size)
-        speed: "500ms", // the speed at which the spinner should rotate
-      },
-      // md: {
-      //   color: theme('colors.red.500', 'red'),
-      //   size: '2em',
-      //   border: '2px',
-      //   speed: '500ms',
-      // },
-    }),
-    extend: {},
+    fontSize: {
+      xxs: "0.65rem",
+      xs: "0.75rem",
+      sm: "0.875rem",
+      base: "1rem",
+      lg: "1.125rem",
+      xl: "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "4rem"
+    },
+    extend: {}
   },
   variants: {
-    backgroundColor: ["responsive", "hover", "focus", "active"],
-    textColor: ["responsive", "hover", "focus", "active"],
-    spinner: ["responsive"],
+    extend: {}
   },
-  plugins: [
-    //require("tailwindcss-dark-mode")(),
-    require("tailwindcss-spinner")(),
-    //require('tailwindcss-plugin-heroicons')({variants: ['responsive', 'hover']})
-  ],
-};
+  plugins: []
+}
