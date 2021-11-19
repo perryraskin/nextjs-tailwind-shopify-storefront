@@ -15,7 +15,7 @@ const Product: NextPage<Props> = ({ product }) => {
 
   const [selectedOptions, setSelectedOptions] = useState(defaultOptionValues)
 
-  const [variantImage, setVariantImage] = useState(product.images.edges[0].node)
+  const [variantImage, setVariantImage] = useState(product.images.edges[0] ? product.images.edges[0].node : "")
   const [variant, setVariant] = useState(product.variants.edges[0].node)
   const [variantQuantity, setVariantQuantity] = useState(1)
 
