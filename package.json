@@ -34,7 +34,7 @@
     "detect-node": "^2.0.4",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^2.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "graphql": "^14.7.0",
     "graphql-tag": "^2.10.4",
     "isomorphic-unfetch": "^3.0.0",
